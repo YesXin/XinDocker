@@ -98,36 +98,63 @@ This example runs a container named `test` using the `debian:latest` image. The 
 
 ###Capture container ID (–cidfile)
 ###捕获容器ID (–cidfile)
-```$ docker run --cidfile /tmp/docker_test.cid ubuntu echo "test"```
+```
+$ docker run --cidfile /tmp/docker_test.cid ubuntu echo "test"
+```
 This will create a container and print `test` to the console. The `cidfile` flag makes Docker attempt to create a new file and write the container ID to it. If the file exists already, Docker will return an error. Docker will close this file when `docker run` exits.
 
-This will create a container and print `test` to the console. The `cidfile` flag makes Docker attempt to create a new file and write the container ID to it. If the file exists already, Docker will return an error. Docker will close this file when `docker run` exits.
+本例将创建一个容器并在控制台输出`test`。`cidfile`标示使Docker试图创建一个新文件并将容器ID写入其中。如果文件已存在，Docker将报错。`docker run`退出时，Docker关闭该文件.
 
-Full container capabilities (–privileged)
+###Full container capabilities (–privileged)
+###完整容器功能 (–privileged)
+```
 $ docker run -t -i --rm ubuntu bash
 root@bc338942ef20:/# mount -t tmpfs none /mnt
 mount: permission denied
-This will not work, because by default, most potentially dangerous kernel capabilities are dropped; including cap_sys_admin (which is required to mount filesystems). However, the --privileged flag will allow it to run:
+```
+This will not work, because by default, most potentially dangerous kernel capabilities are dropped; including `cap_sys_admin` (which is required to mount filesystems). However, the `--privileged` flag will allow it to run:
 
+这样是无法运行的，因为在默认情况下，许多具有潜在危险的核心功能无使用权限；包含`cap_sys_admin`（需要挂载文件系统）。但是，使用`--privileged`标示后可以正常运行：
+
+```
 $ docker run --privileged ubuntu bash
 root@50e3f57e16e6:/# mount -t tmpfs none /mnt
 root@50e3f57e16e6:/# df -h
 Filesystem      Size  Used Avail Use% Mounted on
 none            1.9G     0  1.9G   0% /mnt
-The --privileged flag gives all capabilities to the container, and it also lifts all the limitations enforced by the device cgroup controller. In other words, the container can then do almost everything that the host can do. This flag exists to allow special use-cases, like running Docker within Docker.
+```
+The `--privileged` flag gives all capabilities to the container, and it also lifts all the limitations enforced by the `device` cgroup controller. In other words, the container can then do almost everything that the host can do. This flag exists to allow special use-cases, like running Docker within Docker.
 
-Set working directory (-w)
+`--privileged`标示可以赋予容器所有功能，并通过`device`控制组（Cgroups）控制器解除所有限制。也就是说，容器可以做所有主机能做的事。这可以用于一些特殊用途，比如在Docker中运行Docker。
+
+###Set working directory (-w)
+###设置工作目录 (-w)
+```
 $ docker  run -w /path/to/dir/ -i -t  ubuntu pwd
-The -w lets the command being executed inside directory given, here /path/to/dir/. If the path does not exists it is created inside the container.
+```
+The `-w` lets the command being executed inside directory given, here `/path/to/dir/`. If the path does not exists it is created inside the container.
 
-Mount volume (-v, –read-only)
+`-w`让命令在指定的目录运行, 本例指定目录是`/path/to/dir/`。如果路径不存在则在容器中自动创建。
+
+###Mount volume (-v, –read-only)
+###挂载卷 (-v, –read-only)
+```
 $ docker  run  -v `pwd`:`pwd` -w `pwd` -i -t  ubuntu pwd
-The -v flag mounts the current working directory into the container. The -w lets the command being executed inside the current working directory, by changing into the directory to the value returned by pwd. So this combination executes the command using the container, but inside the current working directory.
+```
+The `-v` flag mounts the current working directory into the container. The `-w` lets the command being executed inside the current working directory, by changing into the directory to the value returned by `pwd`. So this combination executes the command using the container, but inside the current working directory.
 
+`-v`在容器上挂载当前工作目录。`-w`让命令在指定的工作目录运行。
+
+```
 $ docker run -v /doesnt/exist:/foo -w /foo -i -t ubuntu bash
-When the host directory of a bind-mounted volume doesn’t exist, Docker will automatically create this directory on the host for you. In the example above, Docker will create the /doesnt/exist folder before starting your container.
+```
+When the host directory of a bind-mounted volume doesn’t exist, Docker will automatically create this directory on the host for you. In the example above, Docker will create the `/doesnt/exist` folder before starting your container.
 
+若绑定到主机的目录不存在，Docker会自动创建。上面的例子中，在容器启动之前会在主机上创建`/doesnt/exist`目录。
+
+```
 $ docker run --read-only -v /icanwrite busybox touch /icanwrite here
+```
 Volumes can be used in combination with --read-only to control where a container writes files. The --read-only flag mounts the container’s root filesystem as read only prohibiting writes to locations other than the specified volumes for the container.
 
 $ docker run -t -i -v /var/run/docker.sock:/var/run/docker.sock -v ./static-docker:/usr/bin/docker busybox sh
