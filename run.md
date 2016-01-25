@@ -1,5 +1,6 @@
 #run
-```Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+```
+Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
 Run a command in a new container
 
