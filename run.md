@@ -92,11 +92,16 @@ $ echo $?
 $ docker ps -a | grep test
 d6c0fe130dba        debian:7            "/bin/bash"         26 seconds ago      Exited (13) 17 seconds ago                         test
 ```
-This example runs a container named test using the debian:latest image. The -it instructs Docker to allocate a pseudo-TTY connected to the container’s stdin; creating an interactive bash shell in the container. In the example, the bash shell is quit by entering exit 13. This exit code is passed on to the caller of docker run, and is recorded in the test container’s metadata.
+This example runs a container named `test` using the `debian:latest` image. The `-it` instructs Docker to allocate a pseudo-TTY connected to the container’s stdin; creating an interactive `bash` shell in the container. In the example, the `bash` shell is quit by entering `exit 13`. This exit code is passed on to the caller of `docker run`, and is recorded in the `test` container’s metadata.
 
-Capture container ID (–cidfile)
-$ docker run --cidfile /tmp/docker_test.cid ubuntu echo "test"
-This will create a container and print test to the console. The cidfile flag makes Docker attempt to create a new file and write the container ID to it. If the file exists already, Docker will return an error. Docker will close this file when docker run exits.
+本例使用`debian:latest`镜像启动了一个命名为`test`的容器。`-it`参数使Docker分配一个链接到该容器标准输入（设备）文件的伪TTY；为容器创建一个交互`bash` shell。在本例中，输入`exit 13`退出`bash` shell。这个退出代码是由`docker run`产生，并且记录在`test`容器的metadata中。
+
+###Capture container ID (–cidfile)
+###捕获容器ID (–cidfile)
+```$ docker run --cidfile /tmp/docker_test.cid ubuntu echo "test"```
+This will create a container and print `test` to the console. The `cidfile` flag makes Docker attempt to create a new file and write the container ID to it. If the file exists already, Docker will return an error. Docker will close this file when `docker run` exits.
+
+This will create a container and print `test` to the console. The `cidfile` flag makes Docker attempt to create a new file and write the container ID to it. If the file exists already, Docker will return an error. Docker will close this file when `docker run` exits.
 
 Full container capabilities (–privileged)
 $ docker run -t -i --rm ubuntu bash
