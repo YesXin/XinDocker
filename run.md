@@ -66,7 +66,8 @@ Run a command in a new container
   --uts=""                      UTS namespace to use
   -v, --volume=[]               Bind mount a volume
   --volumes-from=[]             Mount volumes from the specified container(s)
-  -w, --workdir=""              Working directory inside the container```
+  -w, --workdir=""              Working directory inside the container
+```
 The docker run command first creates a writeable container layer over the specified image, and then starts it using the specified command. That is, docker run is equivalent to the API /containers/create then /containers/(id)/start. A stopped container can be restarted with all its previous changes intact using docker start. See docker ps -a to view a list of all containers.
 
 The docker run command can be used in combination with docker commit to change the command that a container runs. There is additional detailed information about docker run in the Docker run reference.
