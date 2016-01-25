@@ -73,18 +73,25 @@ The `docker run` command first `creates` a writeable container layer over the sp
 
  `docker run` 命令首先会在指定的镜像之上`creates`一个可写的容器层。然后使用指定的命令`启动`该容器。 `docker run`相当于API中的 `/containers/create`和`/containers/(id)/start`接口。停止的容器也可以使用`docker start`命令重启，并且完整的保存了之前的变化。使用`docker ps -a`命令查看所有容器的列表。
 
-The docker run command can be used in combination with docker commit to change the command that a container runs. There is additional detailed information about docker run in the Docker run reference.
+The `docker run` command can be used in combination with `docker commit` to [change the command that a container runs](https://docs.docker.com/engine/reference/commandline/commit/). There is additional detailed information about `docker run` in the [Docker run reference](https://docs.docker.com/engine/reference/run/).
 
-For information on connecting a container to a network, see the “Docker network overview“.
+`docker run`命令可以结合`docker commit`命令[改变正在运行的容器命令](https://docs.docker.com/engine/reference/commandline/commit/)。关于`docker run`的详细资料请查看[Docker run reference](https://docs.docker.com/engine/reference/run/)。
 
-Examples
-Assign name and allocate psuedo-TTY (–name, -it)
+For information on connecting a container to a network, see the [“Docker network overview“](https://docs.docker.com/engine/userguide/networking/).
+
+容器网络设置，请查阅[“Docker network overview“](https://docs.docker.com/engine/userguide/networking/).
+
+##Examples
+###Assign name and allocate psuedo-TTY (–name, -it)
+###指定容器名称和分配伪TTY (–name, -it)
+```
 $ docker run --name test -it debian
 root@d6c0fe130dba:/# exit 13
 $ echo $?
 13
 $ docker ps -a | grep test
 d6c0fe130dba        debian:7            "/bin/bash"         26 seconds ago      Exited (13) 17 seconds ago                         test
+```
 This example runs a container named test using the debian:latest image. The -it instructs Docker to allocate a pseudo-TTY connected to the container’s stdin; creating an interactive bash shell in the container. In the example, the bash shell is quit by entering exit 13. This exit code is passed on to the caller of docker run, and is recorded in the test container’s metadata.
 
 Capture container ID (–cidfile)
