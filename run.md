@@ -69,9 +69,9 @@ Run a command in a new container
   --volumes-from=[]             Mount volumes from the specified container(s)
   -w, --workdir=""              Working directory inside the container
 ```
-The `docker run` command first `creates` a writeable container layer over the specified image, and then starts it using the specified command. That is, docker run is equivalent to the API /containers/create then /containers/(id)/start. A stopped container can be restarted with all its previous changes intact using docker start. See docker ps -a to view a list of all containers.
+The `docker run` command first `creates` a writeable container layer over the specified image, and then `starts` it using the specified command. That is, `docker run` is equivalent to the API `/containers/create` then `/containers/(id)/start`. A stopped container can be restarted with all its previous changes intact using `docker start`. See `docker ps -a` to view a list of all containers.
 
- `docker run` 命令 first `creates` a writeable container layer over the specified image, and then starts it using the specified command. That is, docker run is equivalent to the API /containers/create then /containers/(id)/start. A stopped container can be restarted with all its previous changes intact using docker start. See docker ps -a to view a list of all containers.
+ `docker run` 命令首先会在指定的镜像之上`creates`一个可写的容器层。然后使用指定的命令`启动`该容器。 `docker run`相当于API中的 `/containers/create`和`/containers/(id)/start`接口。停止的容器也可以使用`docker start`命令重启，并且完整的保存了之前的变化。使用`docker ps -a`命令查看所有容器的列表。
 
 The docker run command can be used in combination with docker commit to change the command that a container runs. There is additional detailed information about docker run in the Docker run reference.
 
