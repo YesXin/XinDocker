@@ -155,20 +155,37 @@ When the host directory of a bind-mounted volume doesn’t exist, Docker will au
 ```
 $ docker run --read-only -v /icanwrite busybox touch /icanwrite here
 ```
-Volumes can be used in combination with --read-only to control where a container writes files. The --read-only flag mounts the container’s root filesystem as read only prohibiting writes to locations other than the specified volumes for the container.
+Volumes can be used in combination with `--read-only` to control where a container writes files. The `--read-only` flag mounts the container’s root filesystem as read only prohibiting writes to locations other than the specified volumes for the container.
 
+`--read-only`可以控制容器写文件。不同于容器的指定卷，`--read-only`标示挂载容器的根文件系统为只读。
+
+```
 $ docker run -t -i -v /var/run/docker.sock:/var/run/docker.sock -v ./static-docker:/usr/bin/docker busybox sh
+```
 By bind-mounting the docker unix socket and statically linked docker binary (such as that provided by https://get.docker.com), you give the container the full access to create and manipulate the host’s Docker daemon.
 
-Publish or expose port (-p, –expose)
+通过绑定挂载Docker unix socket接口和静态链接的Docker二进制（譬如https://get.docker.com所规定的），容器具有完全权限对主机的Docker daemon进行创建和操作。
+
+###Publish or expose port (-p, –expose)
+###发布或暴漏端口 (-p, –expose)
+```
 $ docker run -p 127.0.0.1:80:8080 ubuntu bash
+```
 This binds port 8080 of the container to port 80 on 127.0.0.1 of the host machine. The Docker User Guide explains in detail how to manipulate ports in Docker.
 
-$ docker run --expose 80 ubuntu bash
-This exposes port 80 of the container without publishing the port to the host system’s interfaces.
+本例绑定了容器的8080端口到主机的80端口，Docker的用户说明书详细解释了如何处理Docker端口。
 
-Set environment variables (-e, –env, –env-file)
+```
+$ docker run --expose 80 ubuntu bash
+```
+This exposes port 80 of the container without publishing the port to the host system’s interfaces.
+本例暴漏了容器的80端口，而无需映射到主机的端口。
+
+###Set environment variables (-e, –env, –env-file)
+###设置环境变量 (-e, –env, –env-file)
+```
 $ docker run -e MYVAR1 --env MYVAR2=foo --env-file ./env.list ubuntu bash
+```
 This sets environmental variables in the container. For illustration all three flags are shown here. Where -e, --env take an environment variable and value, or if no = is provided, then that variable’s current value is passed through (i.e. $MYVAR1 from the host is set to $MYVAR1 in the container). When no = is provided and that variable is not defined in the client’s environment then that variable will be removed from the container’s list of environment variables. All three flags, -e, --env and --env-file can be repeated.
 
 Regardless of the order of these three flags, the --env-file are processed first, and then -e, --env flags. This way, the -e or --env will override variables as needed.
