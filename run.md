@@ -188,6 +188,8 @@ $ docker run -e MYVAR1 --env MYVAR2=foo --env-file ./env.list ubuntu bash
 ```
 This sets environmental variables in the container. For illustration all three flags are shown here. Where -e, --env take an environment variable and value, or if no = is provided, then that variable’s current value is passed through (i.e. $MYVAR1 from the host is set to $MYVAR1 in the container). When no = is provided and that variable is not defined in the client’s environment then that variable will be removed from the container’s list of environment variables. All three flags, -e, --env and --env-file can be repeated.
 
+本例设置了容器的环境变量，这里展示的所有的三个标示。`-e`、`--env`
+
 Regardless of the order of these three flags, the --env-file are processed first, and then -e, --env flags. This way, the -e or --env will override variables as needed.
 
 $ cat ./env.list
